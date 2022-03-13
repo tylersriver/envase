@@ -44,7 +44,7 @@ class Container
 
     /**
      * Find an entry
-     * 
+     *
      * @param  string $key
      * @return mixed
      * @throws Exception
@@ -56,7 +56,7 @@ class Container
             $item = $this->registry[$key];
 
             // If static item return
-            if(!$item instanceof \Closure) {
+            if (!$item instanceof \Closure) {
                 return $item;
             }
 
@@ -78,11 +78,11 @@ class Container
 
     /**
      * Create an object from the given FQCN String
-     * 
+     *
      * @param string $key
      * @return object
      */
-    public function  make(string $key)
+    public function make(string $key)
     {
         if (method_exists($key, '__construct')) {
             $reflection = new \ReflectionMethod($key, '__construct');
