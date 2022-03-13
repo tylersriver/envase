@@ -24,3 +24,10 @@ it('resolves closure and second find', function() {
     expect($val)->toBe('bar');
 });
 
+it('resolves to Foo class instance', function() {
+    $c = new Container([]);
+    $obj = $c->get(Foo::class);
+
+    expect($obj)->toBeInstanceOf(Foo::class);
+});
+
