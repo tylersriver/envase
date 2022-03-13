@@ -10,8 +10,13 @@ $c = new Container([
     'fooArr' => ['bar', 'bar2']
 ]);
 $c->set('fooSet', 'fooSet');
+echo "<pre>";
+var_dump($c);
 
 $obj = $c->get(FooDependency::class);
+
+echo "<pre>";
+var_dump($c);
 
 echo "Example";
 exit;
