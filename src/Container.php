@@ -2,6 +2,7 @@
 
 namespace Envase;
 
+use Closure;
 use Exception;
 
 class Container
@@ -42,6 +43,8 @@ class Container
     }
 
     /**
+     * Find an entry
+     * 
      * @param  string $key
      * @return mixed
      * @throws Exception
@@ -50,23 +53,36 @@ class Container
     {
         // Check static registry first
         if ($this->has($key)) {
-            return $this->registry[$key];
+            $item = $this->registry[$key];
+
+            // If static item return
+            if(!$item instanceof \Closure) {
+                return $item;
+            }
+
+            // IF closure we need to call and set
+            // the returned item to the registry for next time
+            $resolved = $item($this);
+            $this->registry[$key] = $resolved;
+            return $resolved;
         }
 
         // If class exists, Autowire
         if (class_exists($key)) {
-            $this->registry[$key] = $this->resolve($key);
+            $this->registry[$key] = $this->make($key);
             return $this->registry[$key];
         }
 
-        throw new Exception('Key not found');
+        throw new NotFoundException('Key not found');
     }
 
     /**
+     * Create an object from the given FQCN String
+     * 
      * @param string $key
      * @return object
      */
-    protected function resolve(string $key)
+    public function  make(string $key)
     {
         if (method_exists($key, '__construct')) {
             $reflection = new \ReflectionMethod($key, '__construct');
