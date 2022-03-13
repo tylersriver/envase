@@ -2,10 +2,11 @@
 
 namespace Envase;
 
+use Psr\Container\ContainerInterface;
 use Closure;
 use Exception;
 
-class Container
+class Container implements ContainerInterface
 {
     /**
      * @var array
@@ -82,21 +83,32 @@ class Container
      * @param string $key
      * @return object
      */
-    public function make(string $key)
+    public function make(string $key): object
     {
-        if (method_exists($key, '__construct')) {
+        // if no constructor create and return
+        if (!method_exists($key, '__construct')) {
+            $obj = new $key();
+        } else {
             $reflection = new \ReflectionMethod($key, '__construct');
             $parameters = $reflection->getParameters();
-    
+
             $dependences = [];
             foreach ($parameters as $parameter) {
-                $dependenceClass = (string) $parameter->getType();
-                $dependences[] = $this->get($dependenceClass);
+                $dependencyType = (string) $parameter->getType();
+
+                $dependencyStr =
+                    class_exists($dependencyType)
+                        ? $dependencyType
+                        : $parameter->getName();
+
+                $dependences[] = $this->get($dependencyStr);
             }
 
-            return new $key(...$dependences);
+            $obj = new $key(...$dependences);
         }
 
-        return new $key();
+        // TODO : Handle property attributes
+        
+        return $obj;
     }
 }
