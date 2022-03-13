@@ -13,4 +13,5 @@ $c->set('fooSet', 'fooSet');
 
 $obj = $c->get(FooDependency::class);
 
+echo "Example";
 exit;
