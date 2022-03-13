@@ -3,6 +3,7 @@
 use Envase\Container;
 use Envase\NotFoundException;
 use Envase\Test\Foo;
+use Envase\Test\FooDependency;
 
 it("throws NotFoundException", function () {
     $c = new Container([]);
@@ -29,5 +30,17 @@ it('resolves to Foo class instance', function() {
     $obj = $c->get(Foo::class);
 
     expect($obj)->toBeInstanceOf(Foo::class);
+});
+
+it('resolves object dependencies', function() {
+    $c = new Container([]);
+    $c->set('fooSet', 'barSet');
+    
+    /** @var $obj FooDependency */
+    $obj = $c->get(FooDependency::class);
+
+    expect($obj)->toBeInstanceOf(FooDependency::class);
+    expect($obj->foo)->toBeInstanceOf(Foo::class);
+    expect($obj->fooSet)->toBe('barSet');
 });
 
