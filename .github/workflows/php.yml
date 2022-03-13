@@ -28,5 +28,5 @@ jobs:
     # - name: Run Mess Detection
       # run: composer run-script md
 
-    # - name: Run Unit Tests
-      # run: composer run-script github-action-phpunit
+    - name: Run Unit Tests
+      run: composer run-script test-github

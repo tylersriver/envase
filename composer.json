@@ -9,7 +9,7 @@
         }
     ],
     "scripts": {
-        "test": "pest --coverage",
+        "test": "pest --coverage --min=90",
         "test-github": "pest --no-coverage",
         "stan": "phpstan analyse src --memory-limit=-1",
         "sniff": "php vendor/squizlabs/php_codesniffer/bin/phpcs -s --colors src/",
@@ -17,7 +17,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Envase\\": "src\\"
+            "Envase\\": "src\\",
+            "Envase\\Test\\": "tests\\"
         }
     },
     "require-dev": {
