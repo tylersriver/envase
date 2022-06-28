@@ -8,7 +8,7 @@ when you call `get` it will only resolve the instance the *first* time and any f
 
 # Installation
 ```cli
-composer require 
+composer require tylersriver/envase
 ```
 # Usage
 
