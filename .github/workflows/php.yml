@@ -29,13 +29,11 @@ jobs:
       # run: composer run-script md
 
     - name: Run Unit Tests
-      uses: php-actions/phpunit@v3
       env:
         XDEBUG_MODE: coverage
-      with: 
-        bootstrap: vendor/autoload.php
-        configuration: phpunit.xml
+      with:
         php_extensions: xdebug
+      run: composer run-script test-github
 
     - name: Upload to Codecov
       uses: codecov/codecov-action@v2
