@@ -27,7 +27,7 @@ class Container implements ContainerInterface
      * @param  string $key
      * @return bool
      */
-    public function has(string $key): bool
+    public function has(string $key)
     {
         return isset($this->registry[$key]);
     }
