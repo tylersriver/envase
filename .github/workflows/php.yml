@@ -29,6 +29,7 @@ jobs:
       # run: composer run-script md
 
     - name: Run Unit Tests
+      uses: codecov/codecov-action@v2
       env:
         XDEBUG_MODE: coverage
       with: 
