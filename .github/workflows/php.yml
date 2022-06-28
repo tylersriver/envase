@@ -29,11 +29,11 @@ jobs:
       # run: composer run-script md
 
     - name: Run Unit Tests
+      uses: NWBY/pest-action@v1.2.0
       env:
         XDEBUG_MODE: coverage
       with:
         php_extensions: xdebug
-      run: composer run-script test-github
 
     - name: Upload to Codecov
       uses: codecov/codecov-action@v2
