@@ -2,9 +2,10 @@
 
 namespace Envase;
 
-use Psr\Container\ContainerInterface;
 use Closure;
 use Exception;
+use ReflectionMethod;
+use Psr\Container\ContainerInterface;
 
 class Container implements ContainerInterface
 {
@@ -85,30 +86,40 @@ class Container implements ContainerInterface
      */
     public function make(string $key): object
     {
-        // if no constructor create and return
-        if (!method_exists($key, '__construct')) {
-            $obj = new $key();
-        } else {
-            $reflection = new \ReflectionMethod($key, '__construct');
-            $parameters = $reflection->getParameters();
-
-            $dependences = [];
-            foreach ($parameters as $parameter) {
-                $dependencyType = (string) $parameter->getType();
-
-                $dependencyStr =
-                    class_exists($dependencyType)
-                        ? $dependencyType
-                        : $parameter->getName();
-
-                $dependences[] = $this->get($dependencyStr);
-            }
-
-            $obj = new $key(...$dependences);
-        }
+        $obj = $this->instantiate($key);
 
         // TODO : Handle property attributes
         
         return $obj;
+    }
+
+    /**
+     * @param string $key - the FQCN of the class to instantiate
+     * @return object - the instantiated class
+     */
+    private function instantiate(string $key): object
+    {
+        // With no constructor defined just return new
+        if (!method_exists($key, '__construct')) {
+            return new $key();
+        }
+        
+        // Let's inject the cosntructor parameters
+        $reflection = new ReflectionMethod($key, '__construct');
+        $parameters = $reflection->getParameters();
+
+        $dependences = [];
+        foreach ($parameters as $parameter) {
+            $dependencyType = (string) $parameter->getType();
+
+            $dependencyStr =
+                class_exists($dependencyType)
+                    ? $dependencyType
+                    : $parameter->getName();
+
+            $dependences[] = $this->get($dependencyStr);
+        }
+
+        return new $key(...$dependences);
     }
 }

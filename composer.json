@@ -9,11 +9,18 @@
         }
     ],
     "scripts": {
+        "check": [
+            "@sniff",
+            "@stan",
+            "@md",
+            "@test"
+        ],
         "test": "pest --coverage --min=90",
         "test-github": "pest --coverage --coverage-clover=coverage.xml",
         "stan": "phpstan analyse src --memory-limit=-1",
         "sniff": "php vendor/squizlabs/php_codesniffer/bin/phpcs -s --colors src/",
-        "fix": "php vendor/squizlabs/php_codesniffer/bin/phpcbf src/"
+        "fix": "php vendor/squizlabs/php_codesniffer/bin/phpcbf src/",
+        "md": "php vendor/bin/phpmd src/ text rulesets.xml"
     },
     "autoload": {
         "psr-4": {
@@ -24,7 +31,8 @@
     "require-dev": {
         "pestphp/pest": "^1.21",
         "phpstan/phpstan": "^1.2",
-        "squizlabs/php_codesniffer": "^3.6"
+        "squizlabs/php_codesniffer": "^3.6",
+        "phpmd/phpmd": "^2.12"
     },
     "require": {
         "php": "^8.1",
