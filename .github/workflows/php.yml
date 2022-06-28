@@ -23,14 +23,14 @@ jobs:
       # run: composer run-script lint
       
     - name: Run Static Analysis
-      env:
-        XDEBUG_MODE: coverage
       run: composer run-script stan    
 
     # - name: Run Mess Detection
       # run: composer run-script md
 
     - name: Run Unit Tests
+      env:
+        XDEBUG_MODE: coverage
       run: composer run-script test-github
 
     - name: Upload to Codecov
