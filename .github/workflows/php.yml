@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
 
     - name: Validate composer.json and composer.lock
       run: composer validate
@@ -29,11 +29,17 @@ jobs:
       # run: composer run-script md
 
     - name: Run Unit Tests
-      uses: codecov/codecov-action@v2
+      uses: php-actions/phpunit@v3
       env:
         XDEBUG_MODE: coverage
       with: 
         bootstrap: vendor/autoload.php
         configuration: phpunit.xml
         php_extensions: xdebug
-      run: composer run-script test-github
+
+    - name: Upload to Codecov
+       uses: codecov/codecov-action@v2
+       with:
+         token: ${{ secrets.CODE_COV }}
+         files: ./coverage.xml
+         verbose: true
