@@ -38,8 +38,8 @@ jobs:
         php_extensions: xdebug
 
     - name: Upload to Codecov
-       uses: codecov/codecov-action@v2
-       with:
-         token: ${{ secrets.CODE_COV }}
-         files: ./coverage.xml
-         verbose: true
+      uses: codecov/codecov-action@v2
+      with:
+        token: ${{ secrets.CODE_COV }}
+        files: ./coverage.xml
+        verbose: true
