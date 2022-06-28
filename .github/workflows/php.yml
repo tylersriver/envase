@@ -29,4 +29,10 @@ jobs:
       # run: composer run-script md
 
     - name: Run Unit Tests
+      env:
+        XDEBUG_MODE: coverage
+      with: 
+        bootstrap: vendor/autoload.php
+        configuration: phpunit.xml
+        php_extensions: xdebug
       run: composer run-script test-github

@@ -10,7 +10,7 @@
     ],
     "scripts": {
         "test": "pest --coverage --min=90",
-        "test-github": "pest --no-coverage",
+        "test-github": "pest --coverage --coverage-clover=coverage.xml",
         "stan": "phpstan analyse src --memory-limit=-1",
         "sniff": "php vendor/squizlabs/php_codesniffer/bin/phpcs -s --colors src/",
         "fix": "php vendor/squizlabs/php_codesniffer/bin/phpcbf src/"
