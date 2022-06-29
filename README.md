@@ -16,7 +16,9 @@
         <img alt="Downloads" src="https://img.shields.io/packagist/dt/tyler/envase">
     </a>
 <p>
-Very tiny PHP implementation of [PSR-11 ContainerInterface](https://www.php-fig.org/psr/psr-11/). Envase is Spanish for Container.
+Very tiny PHP implementation of the <a href="https://www.php-fig.org/psr/psr-11/">PSR-11 Container</a>. 
+
+"Envase" is Spanish for Container.
 
 # About
 Envase container is extremely easy to configure and use. It features a 
