@@ -3,8 +3,8 @@
 use Envase\Inject;
 use Envase\Test\Foo;
 use Envase\Container;
-use Envase\NotFoundException;
 use Envase\Test\FooWithAttr;
+use Envase\NotFoundException;
 use Envase\Test\FooDependency;
 use Envase\Test\FooWithKeyAttr;
 use Envase\Test\FooWithObjAttr;
@@ -36,6 +36,12 @@ it('can create object from inject attribute', function () {
     expect($foo->getFoo()->foo)->toBeInstanceOf(Foo::class);
     expect($foo->getFoo()->fooSet)->toEqual('barSet');
 });
+
+it('throws TypeError on invalid type', function () {
+    $container= new Container;
+    $container->set('foo', new stdClass);
+    $container->get(FooWithAttr::class);
+})->throws(TypeError::class);
 
 it('throws not found when cant find attribute dependency', function () {
     $container= new Container;
