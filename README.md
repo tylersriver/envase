@@ -1,9 +1,12 @@
 <p align="center">
     <a href="https://codecov.io/gh/tylersriver/envase" > 
-        <img src="https://codecov.io/gh/tylersriver/envase/branch/main/graph/badge.svg?token=HE1M6KNO9G"/> 
+        <img als="Coverage" src="https://codecov.io/gh/tylersriver/envase/branch/main/graph/badge.svg?token=HE1M6KNO9G"/> 
     </a>
     <a href="https://github.com/tylersriver/envase/blob/main/LICENSE">
-        <img alt="GitHub" src="https://img.shields.io/github/license/tylersriver/envase">
+        <img alt="License" src="https://img.shields.io/github/license/tylersriver/envase">
+    </a>
+    <a href="https://packagist.org/packages/tyler/envase">
+        <img alt="Version" src="https://img.shields.io/packagist/v/tyler/envase">
     </a>
 <p>
 
