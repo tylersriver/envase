@@ -1,5 +1,4 @@
 # Envase
--------------------------------------------------------------
 <p align="center">
     <a href="https://codecov.io/gh/tylersriver/envase" > 
         <img als="Coverage" src="https://codecov.io/gh/tylersriver/envase/branch/main/graph/badge.svg?token=HE1M6KNO9G"/> 
