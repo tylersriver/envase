@@ -1,3 +1,9 @@
+<p align="center">
+    <a href="https://codecov.io/gh/tylersriver/envase" > 
+        <img src="https://codecov.io/gh/tylersriver/envase/branch/main/graph/badge.svg?token=HE1M6KNO9G"/> 
+    </a>
+<p>
+
 # Envase
 Very tiny PHP implementation of [PSR-11 ContainerInterface](https://www.php-fig.org/psr/psr-11/). Envase is Spanish for Container.
 
