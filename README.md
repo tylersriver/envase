@@ -1,5 +1,24 @@
 # Envase
-Very tiny PHP implementation of [PSR-11 ContainerInterface](https://www.php-fig.org/psr/psr-11/). Envase is Spanish for Container.
+<p align="center">
+    <a href="https://codecov.io/gh/tylersriver/envase" > 
+        <img als="Coverage" src="https://codecov.io/gh/tylersriver/envase/branch/main/graph/badge.svg?token=HE1M6KNO9G"/> 
+    </a>
+    <a href="https://github.com/tylersriver/envase/actions/workflows/php.yml" > 
+        <img als="Build" src="https://github.com/tylersriver/envase/actions/workflows/php.yml/badge.svg"/> 
+    </a>
+    <a href="https://github.com/tylersriver/envase/blob/main/LICENSE">
+        <img alt="License" src="https://img.shields.io/github/license/tylersriver/envase">
+    </a>
+    <a href="https://packagist.org/packages/tyler/envase">
+        <img alt="Version" src="https://img.shields.io/packagist/v/tyler/envase">
+    </a>
+    <a href="https://github.com/tylersriver/envase">
+        <img alt="Downloads" src="https://img.shields.io/packagist/dt/tyler/envase">
+    </a>
+<p>
+Very tiny PHP implementation of the <a href="https://www.php-fig.org/psr/psr-11/">PSR-11 Container</a>. 
+
+"Envase" is Spanish for Container.
 
 # About
 Envase container is extremely easy to configure and use. It features a 
@@ -77,6 +96,38 @@ $foo = $c->get(Foo::class);
 ```
 In this case `$foo` will be an instance of class `Foo` and will have the
 properties `$bar = instance of Bar` and `$dirToSomething = '/path/to/somewhere'`
+
+## Injectable Properties
+If a property on a class being resolved by the container has the `#[Inject]` attribute, the container
+will use that to set that properties value. 
+
+> If you set this property form the constructor, Injected properties will override the constructor set 
+
+```php
+class Foo 
+{
+    #[Inject]
+    private Bar $bar; // will auto inject instance of Bar
+
+    #[Inject]
+    private string $foo // Will auto inject key foo, value will be 'bar'
+
+    #[Inject("fizz")]
+    private string $something // Will auto inject key fizz, value will be 'buzz'
+}
+
+class Bar
+{
+}
+
+$c = new Envase\Container([
+    'foo' => 'bar',
+    'fizz' => 'buzz'
+]);
+
+$foo = $c->get(Foo::class); // will be instance of Foo
+```
+If a key or object can't be resovled the container will throw a `NotFoundException`
 
 ## Making objects
 IF you need to make a new instance of a class you can call the containers
