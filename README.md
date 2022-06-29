@@ -97,6 +97,38 @@ $foo = $c->get(Foo::class);
 In this case `$foo` will be an instance of class `Foo` and will have the
 properties `$bar = instance of Bar` and `$dirToSomething = '/path/to/somewhere'`
 
+## Injectable Properties
+If a property on a class being resolved by the container has the `#[Inject]` attribute, the container
+will use that to set that properties value. 
+
+> If you set this property form the constructor, Injected properties will override the constructor set 
+
+```php
+class Foo 
+{
+    #[Inject]
+    private Bar $bar; // will auto inject instance of Bar
+
+    #[Inject]
+    private string $foo // Will auto inject key foo, value will be 'bar'
+
+    #[Inject("fizz")]
+    private string $something // Will auto inject key fizz, value will be 'buzz'
+}
+
+class Bar
+{
+}
+
+$c = new Envase\Container([
+    'foo' => 'bar',
+    'fizz' => 'buzz'
+]);
+
+$foo = $c->get(Foo::class); // will be instance of Foo
+```
+If a key or object can't be resovled the container will throw a `NotFoundException`
+
 ## Making objects
 IF you need to make a new instance of a class you can call the containers
 `make` method. Note, this will only make a new instance of that class, all
