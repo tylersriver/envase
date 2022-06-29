@@ -2,6 +2,9 @@
     <a href="https://codecov.io/gh/tylersriver/envase" > 
         <img src="https://codecov.io/gh/tylersriver/envase/branch/main/graph/badge.svg?token=HE1M6KNO9G"/> 
     </a>
+    <a href="https://github.com/tylersriver/envase/blob/main/LICENSE">
+        <img alt="GitHub" src="https://img.shields.io/github/license/tylersriver/envase">
+    </a>
 <p>
 
 # Envase
