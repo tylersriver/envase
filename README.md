@@ -8,6 +8,9 @@
     <a href="https://packagist.org/packages/tyler/envase">
         <img alt="Version" src="https://img.shields.io/packagist/v/tyler/envase">
     </a>
+    <a href="https://github.com/tylersriver/envase">
+        <img alt="Downloads" src="https://img.shields.io/packagist/dt/tyler/envase">
+    </a>
 <p>
 
 # Envase
