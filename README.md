@@ -1,22 +1,7 @@
 # Envase
-<p align="center">
-    <a href="https://codecov.io/gh/tylersriver/envase" > 
-        <img als="Coverage" src="https://codecov.io/gh/tylersriver/envase/branch/main/graph/badge.svg?token=HE1M6KNO9G"/> 
-    </a>
-    <a href="https://github.com/tylersriver/envase/actions/workflows/php.yml" > 
-        <img als="Build" src="https://github.com/tylersriver/envase/actions/workflows/php.yml/badge.svg"/> 
-    </a>
-    <a href="https://github.com/tylersriver/envase/blob/main/LICENSE">
-        <img alt="License" src="https://img.shields.io/github/license/tylersriver/envase">
-    </a>
-    <a href="https://packagist.org/packages/tyler/envase">
-        <img alt="Version" src="https://img.shields.io/packagist/v/tyler/envase">
-    </a>
-    <a href="https://github.com/tylersriver/envase">
-        <img alt="Downloads" src="https://img.shields.io/packagist/dt/tyler/envase">
-    </a>
-<p>
-Very tiny PHP implementation of the <a href="https://www.php-fig.org/psr/psr-11/">PSR-11 Container</a>. 
+[![Codecov](https://codecov.io/gh/tylersriver/envase/branch/main/graph/badge.svg?token=HE1M6KNO9G)](https://codecov.io/gh/tylersriver/envase) [![Build](https://github.com/tylersriver/envase/actions/workflows/php.yml/badge.svg)](https://codecov.io/gh/tylersriver/envase) [![License](https://img.shields.io/github/license/tylersriver/envase)](https://github.com/tylersriver/envase/blob/main/LICENSE) [![Version](https://img.shields.io/packagist/v/tyler/envase)](https://packagist.org/packages/tyler/envase) [![Downloads](https://img.shields.io/packagist/dt/tyler/envase)](https://packagist.org/packages/tyler/envase)
+
+Very tiny PHP implementation of the [PSR-11 Container](https://www.php-fig.org/psr/psr-11/). 
 
 "Envase" is Spanish for Container.
 
