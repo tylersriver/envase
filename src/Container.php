@@ -6,6 +6,9 @@ use Closure;
 use Exception;
 use ReflectionMethod;
 use Psr\Container\ContainerInterface;
+use ReflectionClass;
+use ReflectionParameter;
+use ReflectionProperty;
 
 class Container implements ContainerInterface
 {
@@ -88,7 +91,7 @@ class Container implements ContainerInterface
     {
         $obj = $this->instantiate($key);
 
-        // TODO : Handle property attributes
+        $obj = $this->injectProperties($obj);
         
         return $obj;
     }
@@ -110,16 +113,43 @@ class Container implements ContainerInterface
 
         $dependences = [];
         foreach ($parameters as $parameter) {
-            $dependencyType = (string) $parameter->getType();
-
-            $dependencyStr =
-                class_exists($dependencyType)
-                    ? $dependencyType
-                    : $parameter->getName();
-
+            $dependencyStr = $this->getDependencyNameFromType($parameter);
             $dependences[] = $this->get($dependencyStr);
         }
 
         return new $key(...$dependences);
+    }
+
+    private function injectProperties(object $obj): object
+    {
+        $reflected = new ReflectionClass($obj);
+        foreach ($reflected->getProperties() as $prop) {
+            // Check if propert has Inject attr
+            $parameterAttr = $prop->getAttributes(Inject::class);
+            if (count($parameterAttr) === 0) {
+                continue;
+            }
+
+            // Create the Inject attr and get the key to resolve
+            $parameterAttr = $parameterAttr[0]->newInstance();
+            $key = $parameterAttr->getKey();
+
+            // Resolve prop, when null try by name
+            $propValue = $this->get($key ?? $this->getDependencyNameFromType($prop));
+
+            // Set the property on the object
+            $prop->setValue($obj, $propValue);
+        }
+
+        return $obj;
+    }
+
+    private function getDependencyNameFromType(ReflectionParameter|ReflectionProperty $parameter): string
+    {
+        $dependencyType = (string) $parameter->getType();
+        return
+            class_exists($dependencyType)
+                ? $dependencyType
+                : $parameter->getName();
     }
 }
