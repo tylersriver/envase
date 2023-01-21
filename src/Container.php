@@ -32,7 +32,7 @@ class Container implements ContainerInterface
      */
     public function add(array|string $definitions): self
     {
-        if(is_string($definitions) && file_exists($definitions)) {
+        if (is_string($definitions) && file_exists($definitions)) {
             $definitions = require $definitions;
         }
 
