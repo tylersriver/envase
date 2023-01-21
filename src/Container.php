@@ -15,16 +15,29 @@ class Container implements ContainerInterface
     /**
      * @var array
      */
-    private array $registry;
+    private array $registry = [];
 
     /**
      * Container constructor.
      *
-     * @param array $definitions
+     * @param array|string $definitions
      */
-    public function __construct(array $definitions = [])
+    public function __construct(array|string $definitions = [])
     {
-        $this->registry = $definitions;
+        $this->add($definitions);
+    }
+
+    /**
+     * @param array|string $definitions
+     */
+    public function add(array|string $definitions): self
+    {
+        if(is_string($definitions) && file_exists($definitions)) {
+            $definitions = require $definitions;
+        }
+
+        $this->registry = array_merge($this->registry, $definitions);
+        return $this;
     }
 
     /**

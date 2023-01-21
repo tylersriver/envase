@@ -44,3 +44,30 @@ it('resolves object dependencies', function() {
     expect($obj->fooSet)->toBe('barSet');
 });
 
+it('can take multiple definitions sources', function() {
+    $c = new Container(['foo' => 'bar']);
+    $c->add(['foo' => 'jar']);
+
+    expect($c->get('foo'))->toBe('jar');
+
+    $c->add(['fizz' => 'buzz']);
+    expect($c->has('foo'))->toBeTrue();
+    expect($c->has('fizz'))->toBeTrue();
+    expect($c->get('fizz'))->toBe('buzz');
+
+});
+
+it('resolves definitions from file', function() {
+    $file = __DIR__ . '/definitions.php';
+    $c = new Container($file);
+    $c->add(['test' => 'yes']);
+    $c->set('this', 'that');
+
+    expect($c->has('foo'))->toBeTrue();
+    expect($c->has('fizz'))->toBeTrue();
+    expect($c->get('fizz'))->toBe('buzz');
+    expect($c->get('foo'))->toBe('bar');
+    expect($c->get('test'))->toBe('yes');
+    expect($c->get('this'))->toBe('that');
+});
+
