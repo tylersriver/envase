@@ -170,8 +170,8 @@ class Container implements ContainerInterface
             $dependencyType instanceof ReflectionNamedType
             && !$dependencyType->isBuiltin()
         ) {
-            return 
-                $dependencyType->allowsNull() 
+            return
+                $dependencyType->allowsNull()
                     ? ltrim((string)$dependencyType, '?')
                     : (string)$dependencyType;
         }
