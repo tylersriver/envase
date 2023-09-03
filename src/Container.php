@@ -161,7 +161,7 @@ class Container implements ContainerInterface
     {
         $dependencyType = (string) $parameter->getType();
         return
-            class_exists($dependencyType)
+            class_exists($dependencyType) || interface_exists($dependencyType)
                 ? $dependencyType
                 : $parameter->getName();
     }
