@@ -46,9 +46,10 @@ you can add definitions as Closures that will be invoked the first time
 `get` is called.
 
 ```php
-$c->set('foo', function(Envase\Container $c) => {
-    return new Bar();
-});
+$c->set('foo', fn(Envase\Container $c) => new Bar);
+
+// or the short hand helper
+$c->set('foo', Envase\get(Bar::class))
 
 $bar = $c->get('foo'); // <-- will result in calling the closure
 ```
