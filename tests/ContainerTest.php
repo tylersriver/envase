@@ -4,6 +4,10 @@ use Envase\Container;
 use Envase\NotFoundException;
 use Envase\Test\Foo;
 use Envase\Test\FooDependency;
+use Envase\Test\FooImplementation;
+use Envase\Test\FooInterface;
+
+use function Envase\get;
 
 it("throws NotFoundException", function () {
     $c = new Container;
@@ -69,5 +73,26 @@ it('resolves definitions from file', function() {
     expect($c->get('foo'))->toBe('bar');
     expect($c->get('test'))->toBe('yes');
     expect($c->get('this'))->toBe('that');
+});
+
+it('errors for no interface mapped', function () {
+    $c = new Container;
+    $c->get(FooInterface::class);
+})->throws(NotFoundException::class);
+
+it('resolves mapped interface', function () {
+    $c = new Container([
+        FooInterface::class => fn($c) => $c->get(FooImplementation::class)
+    ]);
+    $obj = $c->get(FooInterface::class);
+    expect($obj)->toBeInstanceOf(FooImplementation::class);
+});
+
+it('resolves mapped interface with helper', function () {
+    $c = new Container([
+        FooInterface::class => get(FooImplementation::class)
+    ]);
+    $obj = $c->get(FooInterface::class);
+    expect($obj)->toBeInstanceOf(FooImplementation::class);
 });
 
