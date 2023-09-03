@@ -5,7 +5,7 @@ namespace Envase\Test;
 class FooDependency
 {
     public function __construct(
-        public Foo $foo, 
+        public Foo|string $foo, 
         public string $fooSet
     ){
     }
