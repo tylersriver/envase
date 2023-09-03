@@ -8,6 +8,6 @@ use Psr\Container\ContainerInterface;
 if (!function_exists('Envase\get')) {
     function get(string $entry): Closure
     {
-        return fn(ContainerInterface $c) => $c->get($entry);
+        return fn(ContainerInterface $container) => $container->get($entry);
     }
 }
