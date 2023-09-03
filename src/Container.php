@@ -7,8 +7,10 @@ use Exception;
 use ReflectionMethod;
 use Psr\Container\ContainerInterface;
 use ReflectionClass;
+use ReflectionNamedType;
 use ReflectionParameter;
 use ReflectionProperty;
+use ReflectionUnionType;
 
 class Container implements ContainerInterface
 {
@@ -159,10 +161,22 @@ class Container implements ContainerInterface
 
     private function getDependencyNameFromType(ReflectionParameter|ReflectionProperty $parameter): string
     {
-        $dependencyType = (string) $parameter->getType();
-        return
-            class_exists($dependencyType) || interface_exists($dependencyType)
-                ? $dependencyType
-                : $parameter->getName();
+        $dependencyType = $parameter->getType();
+
+        // Named types meaning only a single type and
+        // aren't a built in type can be resolved as the class/interface
+        // they are
+        if (
+            $dependencyType instanceof ReflectionNamedType
+            && !$dependencyType->isBuiltin()
+        ) {
+            return
+                $dependencyType->allowsNull()
+                    ? ltrim((string)$dependencyType, '?')
+                    : (string)$dependencyType;
+        }
+
+        // otherwise we resolve by the properties name after the $
+        return $parameter->getName();
     }
 }
