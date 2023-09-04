@@ -128,20 +128,24 @@ class Container implements ContainerInterface
 
         $dependencies = [];
         foreach ($parameters as $parameter) {
-            $dependencyStr = $this->getDependencyNameFromType($parameter);
-
-            try {
-                $dependencies[] = $this->get($dependencyStr);
-            } catch (NotFoundException $e) {
-                if ($parameter->getType()->allowsNull()) {
-                    $dependencies[] = null;
-                } else {
-                    throw $e;
-                }
-            }
+            $dependencies[] = $this->resolveDependency($parameter);
         }
 
         return new $key(...$dependencies);
+    }
+
+    private function resolveDependency(ReflectionParameter $parameter): mixed
+    {
+        $dependencyStr = $this->getDependencyNameFromType($parameter);
+
+        try {
+            return $this->get($dependencyStr);
+        } catch (NotFoundException $e) {
+            if ($parameter->getType()?->allowsNull()) {
+                return null;
+            }
+            throw $e;
+        }
     }
 
     private function injectProperties(object $obj): object
