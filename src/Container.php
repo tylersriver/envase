@@ -136,9 +136,9 @@ class Container implements ContainerInterface
 
     /**
      * Given a class property attempt to resolve it from the container.
-     * When it fails to resolve but the parameters type allows null 
+     * When it fails to resolve but the parameters type allows null
      * we fallback to null.
-     * 
+     *
      * @throws NotFoundException
      */
     private function resolveDependency(ReflectionParameter $parameter): mixed
@@ -156,7 +156,7 @@ class Container implements ContainerInterface
     }
 
     /**
-     * for the given object check if the Inject attribute is 
+     * for the given object check if the Inject attribute is
      * defined on each class property, attempt to set
      * it from the container if possible
      */
