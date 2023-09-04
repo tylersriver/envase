@@ -134,6 +134,13 @@ class Container implements ContainerInterface
         return new $key(...$dependencies);
     }
 
+    /**
+     * Given a class property attempt to resolve it from the container.
+     * When it fails to resolve but the parameters type allows null 
+     * we fallback to null.
+     * 
+     * @throws NotFoundException
+     */
     private function resolveDependency(ReflectionParameter $parameter): mixed
     {
         $dependencyStr = $this->getDependencyNameFromType($parameter);
@@ -148,6 +155,11 @@ class Container implements ContainerInterface
         }
     }
 
+    /**
+     * for the given object check if the Inject attribute is 
+     * defined on each class property, attempt to set
+     * it from the container if possible
+     */
     private function injectProperties(object $obj): object
     {
         $reflected = new ReflectionClass($obj);
@@ -172,6 +184,11 @@ class Container implements ContainerInterface
         return $obj;
     }
 
+    /**
+     * Given a class property or constructor parameter resolve what string we want
+     * to resolve from the conatiner. For non built in types attempt to locate a class/interface
+     * to resolve. IF built in we return the name of the property/parameter
+     */
     private function getDependencyNameFromType(ReflectionParameter|ReflectionProperty $parameter): string
     {
         $dependencyType = $parameter->getType();
