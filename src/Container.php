@@ -93,7 +93,7 @@ class Container implements ContainerInterface
             return $this->registry[$key];
         }
 
-        throw new NotFoundException('Key not found');
+        throw new NotFoundException($key);
     }
 
     /**
@@ -126,20 +126,29 @@ class Container implements ContainerInterface
         $reflection = new ReflectionMethod($key, '__construct');
         $parameters = $reflection->getParameters();
 
-        $dependences = [];
+        $dependencies = [];
         foreach ($parameters as $parameter) {
             $dependencyStr = $this->getDependencyNameFromType($parameter);
-            $dependences[] = $this->get($dependencyStr);
+
+            try {
+                $dependencies[] = $this->get($dependencyStr);
+            } catch(NotFoundException $e) {
+                if($parameter->getType()->allowsNull()) {
+                    $dependencies[] = null;
+                } else {
+                    throw $e;
+                }
+            }
         }
 
-        return new $key(...$dependences);
+        return new $key(...$dependencies);
     }
 
     private function injectProperties(object $obj): object
     {
         $reflected = new ReflectionClass($obj);
         foreach ($reflected->getProperties() as $prop) {
-            // Check if propert has Inject attr
+            // Check if property has Inject attr
             $parameterAttr = $prop->getAttributes(Inject::class);
             if (count($parameterAttr) === 0) {
                 continue;
