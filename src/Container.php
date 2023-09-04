@@ -132,8 +132,8 @@ class Container implements ContainerInterface
 
             try {
                 $dependencies[] = $this->get($dependencyStr);
-            } catch(NotFoundException $e) {
-                if($parameter->getType()->allowsNull()) {
+            } catch (NotFoundException $e) {
+                if ($parameter->getType()->allowsNull()) {
                     $dependencies[] = null;
                 } else {
                     throw $e;
