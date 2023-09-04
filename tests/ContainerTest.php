@@ -2,17 +2,19 @@
 
 use Envase\Container;
 use Envase\NotFoundException;
+use Envase\Test\BarWithNullable;
 use Envase\Test\Foo;
 use Envase\Test\FooDependency;
 use Envase\Test\FooImplementation;
 use Envase\Test\FooInterface;
+use Envase\Test\FooWithNullable;
 
 use function Envase\get;
 
 it("throws NotFoundException", function () {
     $c = new Container;
     $c->get('foo');
-})->throws(NotFoundException::class, 'Key not found');
+})->throws(NotFoundException::class, "Key 'foo' not found");
 
 it('finds foo and it equals bar', function() {
     $c = new Container(['foo' => 'bar']);
@@ -95,4 +97,16 @@ it('resolves mapped interface with helper', function () {
     $obj = $c->get(FooInterface::class);
     expect($obj)->toBeInstanceOf(FooImplementation::class);
 });
+
+it('allows null when no match found in container', function() {
+    $c = new Container;
+    $obj = $c->get(FooWithNullable::class);
+    expect($obj)->toBeInstanceOf(FooWithNullable::class);
+    expect($obj->bar)->toBeNull();
+});
+
+it('throws not found after null then not found', function() {
+    $c = new Container;
+    $obj = $c->get(BarWithNullable::class);
+})->throws(NotFoundException::class);
 
