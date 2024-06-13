@@ -2,7 +2,6 @@
 
 namespace Envase;
 
-use Closure;
 use Exception;
 use ReflectionMethod;
 use Psr\Container\ContainerInterface;
@@ -10,7 +9,6 @@ use ReflectionClass;
 use ReflectionNamedType;
 use ReflectionParameter;
 use ReflectionProperty;
-use ReflectionUnionType;
 
 class Container implements ContainerInterface
 {
@@ -69,14 +67,14 @@ class Container implements ContainerInterface
      * @return mixed
      * @throws Exception
      */
-    public function get(string $key)
+    public function get(string $key): mixed
     {
         // Check static registry first
         if ($this->has($key)) {
             $item = $this->registry[$key];
 
             // If static item return
-            if (!$item instanceof \Closure) {
+            if (!is_callable($item)) {
                 return $item;
             }
 
